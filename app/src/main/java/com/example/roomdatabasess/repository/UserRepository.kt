@@ -1,6 +1,8 @@
-package com.example.roomdatabasess.data
+package com.example.roomdatabasess.repository
 
 import androidx.lifecycle.LiveData
+import com.example.roomdatabasess.data.UserDao
+import com.example.roomdatabasess.model.User
 
 class UserRepository(private val userDao: UserDao) {
 

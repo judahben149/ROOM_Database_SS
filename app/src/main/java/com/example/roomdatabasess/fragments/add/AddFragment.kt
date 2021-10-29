@@ -11,8 +11,8 @@ import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import com.example.roomdatabasess.R
-import com.example.roomdatabasess.data.User
-import com.example.roomdatabasess.data.UserViewModel
+import com.example.roomdatabasess.model.User
+import com.example.roomdatabasess.viewmodel.UserViewModel
 import kotlinx.android.synthetic.main.fragment_add.*
 import kotlinx.android.synthetic.main.fragment_add.view.*
 
