@@ -20,6 +20,7 @@ import kotlinx.android.synthetic.main.fragment_add.view.*
 class AddFragment : Fragment() {
 
     private lateinit var mUserViewModel: UserViewModel
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
