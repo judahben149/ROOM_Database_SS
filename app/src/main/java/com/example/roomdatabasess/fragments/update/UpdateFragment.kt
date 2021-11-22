@@ -1,12 +1,13 @@
 package com.example.roomdatabasess.fragments.update
 
+import android.annotation.SuppressLint
+import android.app.AlertDialog
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextUtils
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
@@ -36,8 +37,10 @@ class UpdateFragment : Fragment() {
         view.etUpdateAge.setText(args.currentUser.age.toString())
 
         view.btnUpdate.setOnClickListener {
-
+            updateUser()
         }
+
+        setHasOptionsMenu(true)
         return view
     }
 
@@ -49,12 +52,42 @@ class UpdateFragment : Fragment() {
         if (inputCheck(firstName, lastName, etUpdateAge.text)){
             val updatedUser = User(args.currentUser.id, firstName, lastName, age)
             mUserViewModel.updateUser(updatedUser)
+            Toast.makeText(requireContext(), "Updated Successfully!", Toast.LENGTH_SHORT).show()
             findNavController().navigate(R.id.action_updateFragment_to_listFragment2)
         }
+        else Toast.makeText(requireContext(), "Please fill out all fields!", Toast.LENGTH_SHORT).show()
     }
 
     private fun inputCheck(firstName:String, lastName:String, age: Editable): Boolean {
         return !(TextUtils.isEmpty(firstName) && TextUtils.isEmpty(lastName) && age.isEmpty())
     }
 
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.delete_menu, menu)
+    }
+
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == R.id.menu_delete) {
+            deleteUser()
+        }
+        return super.onOptionsItemSelected(item)
+    }
+
+    private fun deleteUser() {
+        val builder = AlertDialog.Builder(requireContext())
+        builder.setPositiveButton("Yes") {_,_ ->
+            mUserViewModel.deleteUser(args.currentUser)
+            Toast.makeText(requireContext(), "Successfully removed: ${args.currentUser.firstName}", Toast.LENGTH_SHORT).show()
+            findNavController().navigate(R.id.action_updateFragment_to_listFragment2)
+        }
+
+        builder.setNegativeButton("No") {_,_ ->
+
+        }
+        builder.setTitle("Delete ${args.currentUser.firstName}?")
+        builder.setMessage("Are you sure you want to delete ${args.currentUser.firstName}?")
+        builder.setIcon(R.drawable.ic_delete)
+        builder.create().show()
+    }
 }
